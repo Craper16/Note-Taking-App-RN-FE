@@ -37,7 +37,12 @@ export const notesApi = createApi({
       },
     }),
     createNote: builder.mutation({
-      query: body => {
+      query: (body: {
+        title: string;
+        content: string;
+        tags: string[];
+        categoryTitle: string;
+      }) => {
         return {
           url: '/note/create-note',
           method: 'post',

@@ -18,8 +18,8 @@ const NoteDetails = ({content, createdAt, tags, title, updatedAt, category}: pro
       <Text>{category}</Text>
       <Text>{createdAt.toString().split('T')[0]}</Text>
       <Text>{updatedAt.toString().split('T')[0]}</Text>
-      {tags.map((tag) => {
-        return <Text key={tag}>{tag}</Text>
+      {tags.map((tag, i) => {
+        return <Text key={i}>{tag}</Text>
       })}
     </View>
   );

@@ -4,22 +4,21 @@ import {Card, Title, Paragraph, Divider} from 'react-native-paper';
 
 type props = {
   title: string;
-  content: string;
-  tags: string[];
+  category: string;
   updatedAt: Date;
   createdAt: Date;
 };
 
-const Note = ({content, createdAt, tags, title, updatedAt}: props) => {
+const Note = ({createdAt, title, category, updatedAt}: props) => {
   return (
     <Card mode="elevated" style={styles.container}>
-      <Card.Title title={title} titleVariant="headlineMedium" />
+      <Card.Title
+        title={title}
+        titleVariant="headlineMedium"
+        titleNumberOfLines={2}
+      />
       <Divider bold />
-      <Paragraph>{content}</Paragraph>
-      <Text>Tags:</Text>
-      {tags.map((tag, i) => (
-        <Text key={i}>{tag}</Text>
-      ))}
+      <Paragraph>{category}</Paragraph>
       <Divider bold />
       <Text>Created at: {createdAt.toString().split('T')[0]}</Text>
       <Text>Updated at: {updatedAt.toString().split('T')[0]}</Text>

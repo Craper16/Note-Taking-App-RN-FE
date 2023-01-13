@@ -31,6 +31,9 @@ const notesSlice = createSlice({
       state.notesData = [...state.notesData, ...action.payload.data];
       state.isEnd = action.payload.data?.length === 0;
     },
+    setNote: (state, action: PayloadAction<{data: noteData}>) => {
+      state.notesData = [action.payload.data, ...state.notesData];
+    },
     defaultNotes: state => {
       state.notesData = initialState.notesData;
       state.filteredData = initialState.filteredData;
@@ -39,6 +42,6 @@ const notesSlice = createSlice({
   },
 });
 
-export const {setNotes, defaultNotes} = notesSlice.actions;
+export const {setNotes, defaultNotes, setNote} = notesSlice.actions;
 
 export default notesSlice.reducer;

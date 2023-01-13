@@ -1,5 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
+import {Button} from 'react-native-paper';
 import {useFetchNoteQuery} from '../../redux/api/notesApi';
 import {StackScreenProps} from '@react-navigation/stack';
 import {MainStackParams} from '../../navigation/MainNavigation';
@@ -11,8 +12,6 @@ type props = StackScreenProps<MainStackParams, 'Note'>;
 const Note = ({route, navigation}: props) => {
   const {noteId} = route.params;
   const {isError, isFetching, data, error} = useFetchNoteQuery(noteId);
-
-  console.log(error);
 
   if (isError) {
     return (
@@ -38,6 +37,12 @@ const Note = ({route, navigation}: props) => {
       )}
     </View>
   );
+};
+
+export const screenOptions = () => {
+  return {
+    headerTitle: '',
+  };
 };
 
 export default Note;

@@ -3,12 +3,16 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Login from '../screens/auth/Login';
 import Signup from '../screens/auth/Signup';
-import Notes from '../screens/notes/Notes';
-import Note from '../screens/notes/Note';
+import Notes, {
+  screenOptions as notesScreenOptions,
+} from '../screens/notes/Notes';
+import Note, {screenOptions as noteScreenOptions} from '../screens/notes/Note';
+import AddNote from '../screens/notes/AddNote';
 
 export type MainStackParams = {
   Notes: undefined;
-  Note: {noteId: string};
+  Note: {noteId: string; title: string};
+  AddNote: undefined;
 };
 
 const MainNavigatorStack = createStackNavigator<MainStackParams>();
@@ -18,8 +22,17 @@ export const MainScreenStack = () => {
     <MainNavigatorStack.Navigator
       initialRouteName="Notes"
       screenOptions={{headerTintColor: '#8A2BE2'}}>
-      <MainNavigatorStack.Screen name="Notes" component={Notes} />
-      <MainNavigatorStack.Screen name="Note" component={Note} />
+      <MainNavigatorStack.Screen
+        options={notesScreenOptions}
+        name="Notes"
+        component={Notes}
+      />
+      <MainNavigatorStack.Screen
+        options={noteScreenOptions}
+        name="Note"
+        component={Note}
+      />
+      <MainNavigatorStack.Screen name="AddNote" component={AddNote} />
     </MainNavigatorStack.Navigator>
   );
 };
