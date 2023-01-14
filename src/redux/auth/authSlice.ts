@@ -1,9 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface authModel {
-  accessToken: string | null;
-  username: string | null;
-}
+import {authModel} from '../../interfaces/authInterface';
 
 const initialState: authModel = {
   accessToken: null,

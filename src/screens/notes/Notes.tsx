@@ -6,11 +6,13 @@ import {useFetchNotesQuery} from '../../redux/api/notesApi';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {resetKeychainData} from '../../storage/keychain';
 import {FlashList} from '@shopify/flash-list';
-import {defaultNotes, noteData, setNotes} from '../../redux/auth/notesSlice';
+import {defaultNotes, setNotes} from '../../redux/notes/notesSlice';
 import Note from '../../components/notes/Note';
+import {noteData} from '../../interfaces/noteInterface';
 import {StackScreenProps} from '@react-navigation/stack';
-import {MainStackParams} from '../../navigation/MainNavigation';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
+import type {MainStackParams} from '../../types/navigationTypes';
 
 type props = StackScreenProps<MainStackParams, 'Notes'>;
 
@@ -23,7 +25,7 @@ const Notes = ({navigation}: props) => {
 
   const {notesData, isEnd} = useAppSelector(state => state.notes);
 
-  const {isError, error, data, isFetching, isSuccess, refetch} =
+  const {isError, error, data, isFetching, isSuccess} =
     useFetchNotesQuery(page);
 
   useEffect(() => {
@@ -75,7 +77,7 @@ const Notes = ({navigation}: props) => {
   const renderNote = ({item}: {item: noteData}) => (
     <TouchableWithoutFeedback
       onPress={() =>
-        navigation.navigate('Note', {noteId: item._id, title: item.title})
+        navigation.navigate('Note', {noteId: item._id})
       }>
       <Note
         key={item._id}

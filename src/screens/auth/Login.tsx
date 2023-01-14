@@ -16,7 +16,7 @@ import {loginValidationSchema} from '../../validations/auth/authValidations';
 import {Formik} from 'formik';
 import {storeKeychainData} from '../../storage/keychain';
 import type {StackScreenProps} from '@react-navigation/stack';
-import {AuthStackParams} from '../../navigation/MainNavigation';
+import type { AuthStackParams } from '../../types/navigationTypes';
 
 type props = StackScreenProps<AuthStackParams, 'Login'>;
 
@@ -109,7 +109,7 @@ const Login = ({navigation}: props) => {
                     testID="loginButton"
                     disabled={!isValid || isLoading}
                     onPress={handleSubmit}
-                    mode="elevated"
+                    mode="contained"
                     loading={isLoading}>
                     Login
                   </Button>

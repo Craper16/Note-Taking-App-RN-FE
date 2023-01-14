@@ -1,17 +1,48 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {Button} from 'react-native-paper';
-import {useFetchNoteQuery} from '../../redux/api/notesApi';
+import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  useDeleteNoteMutation,
+  useFetchNoteQuery,
+} from '../../redux/api/notesApi';
 import {StackScreenProps} from '@react-navigation/stack';
-import {MainStackParams} from '../../navigation/MainNavigation';
 import NoteDetails from '../../components/notes/NoteDetails';
-import {ActivityIndicator} from 'react-native-paper';
+import {ActivityIndicator, Button, IconButton} from 'react-native-paper';
+
+import type {MainStackParams} from '../../types/navigationTypes';
+import {useAppDispatch} from '../../redux/hooks';
+import {removeNote} from '../../redux/notes/notesSlice';
 
 type props = StackScreenProps<MainStackParams, 'Note'>;
 
 const Note = ({route, navigation}: props) => {
   const {noteId} = route.params;
-  const {isError, isFetching, data, error} = useFetchNoteQuery(noteId);
+
+  const dispatch = useAppDispatch();
+
+  const {isError, isFetching, data, error, refetch} = useFetchNoteQuery(noteId);
+
+  const [deleteNote, {isLoading, isSuccess}] = useDeleteNoteMutation();
+
+  useEffect(() => {
+    if (data?.note?.title || data?.note?.content || data?.note?.tags) {
+      refetch();
+    }
+  }, [data?.note?.title, data?.note?.content, data?.note?.tags, refetch]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(removeNote({noteId: noteId}));
+      navigation.navigate('Notes');
+    }
+  }, [isSuccess]);
+
+  if (isLoading) {
+    return (
+      <View>
+        <ActivityIndicator animating={true} />
+      </View>
+    );
+  }
 
   if (isError) {
     return (
@@ -22,18 +53,34 @@ const Note = ({route, navigation}: props) => {
   }
 
   return (
-    <View>
+    <View style={styles.screen}>
       {isFetching ? (
         <ActivityIndicator animating={true} />
       ) : (
-        <NoteDetails
-          category={data.note.category}
-          content={data.note.content}
-          createdAt={data.note.createdAt}
-          tags={data.note.tags}
-          title={data.note.title}
-          updatedAt={data.note.updatedAt}
-        />
+        <View>
+          <Button
+            icon="delete"
+            style={styles.deleteIcon}
+            onPress={() => deleteNote(noteId)}>
+            Delete note
+          </Button>
+          <NoteDetails
+            category={data.note.category}
+            content={data.note.content}
+            createdAt={data.note.createdAt}
+            tags={data.note.tags}
+            title={data.note.title}
+            updatedAt={data.note.updatedAt}
+            handleUpdate={() =>
+              navigation.navigate('UpdateNote', {
+                noteId: noteId,
+                content: data?.note.content,
+                tags: data?.note.tags,
+                title: data?.note.title,
+              })
+            }
+          />
+        </View>
       )}
     </View>
   );
@@ -44,5 +91,16 @@ export const screenOptions = () => {
     headerTitle: '',
   };
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#1f1f1f',
+  },
+  deleteIcon: {
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+  },
+});
 
 export default Note;

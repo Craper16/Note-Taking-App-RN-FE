@@ -123,7 +123,7 @@ const Signup = () => {
                     testID="loginButton"
                     disabled={!isValid || isLoading}
                     onPress={handleSubmit}
-                    mode="elevated"
+                    mode="contained"
                     loading={isLoading}>
                     Signup
                   </Button>

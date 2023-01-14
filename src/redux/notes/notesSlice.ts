@@ -1,15 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-
-export interface noteData {
-  _id: string;
-  category: string;
-  title: string;
-  content: string;
-  tags: string[];
-  createdAt: Date;
-  updatedAt: Date;
-  creator: string;
-}
+import {noteData} from '../../interfaces/noteInterface';
 
 interface notesModel {
   notesData: noteData[];
@@ -34,6 +24,11 @@ const notesSlice = createSlice({
     setNote: (state, action: PayloadAction<{data: noteData}>) => {
       state.notesData = [action.payload.data, ...state.notesData];
     },
+    removeNote: (state, action: PayloadAction<{noteId: string}>) => {
+      state.notesData = [
+        ...state.notesData.filter(note => note._id !== action.payload.noteId),
+      ];
+    },
     defaultNotes: state => {
       state.notesData = initialState.notesData;
       state.filteredData = initialState.filteredData;
@@ -42,6 +37,6 @@ const notesSlice = createSlice({
   },
 });
 
-export const {setNotes, defaultNotes, setNote} = notesSlice.actions;
+export const {setNotes, defaultNotes, setNote, removeNote} = notesSlice.actions;
 
 export default notesSlice.reducer;

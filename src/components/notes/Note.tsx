@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
-import {Card, Title, Paragraph, Divider} from 'react-native-paper';
+import {Card, Paragraph, Divider} from 'react-native-paper';
 
 type props = {
   title: string;

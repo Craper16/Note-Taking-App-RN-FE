@@ -1,6 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
+import type {AuthStackParams, MainStackParams} from '../types/navigationTypes';
+
 import Login from '../screens/auth/Login';
 import Signup from '../screens/auth/Signup';
 import Notes, {
@@ -8,12 +10,7 @@ import Notes, {
 } from '../screens/notes/Notes';
 import Note, {screenOptions as noteScreenOptions} from '../screens/notes/Note';
 import AddNote from '../screens/notes/AddNote';
-
-export type MainStackParams = {
-  Notes: undefined;
-  Note: {noteId: string; title: string};
-  AddNote: undefined;
-};
+import UpdateNote from '../screens/notes/UpdateNote';
 
 const MainNavigatorStack = createStackNavigator<MainStackParams>();
 
@@ -33,16 +30,12 @@ export const MainScreenStack = () => {
         component={Note}
       />
       <MainNavigatorStack.Screen name="AddNote" component={AddNote} />
+      <MainNavigatorStack.Screen name="UpdateNote" component={UpdateNote} />
     </MainNavigatorStack.Navigator>
   );
 };
 
 const AuthNavigatorStack = createStackNavigator<AuthStackParams>();
-
-export type AuthStackParams = {
-  Login: undefined;
-  Signup: undefined;
-};
 
 export const AuthScreenStack = () => {
   return (

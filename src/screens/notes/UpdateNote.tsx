@@ -1,46 +1,44 @@
-import {View, Text} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
-import {useCreateNoteMutation} from '../../redux/api/notesApi';
-import {Formik} from 'formik';
-import {addNoteValidationSchema} from '../../validations/notes/noteValidation';
-import {StackScreenProps} from '@react-navigation/stack';
+import {View, Text, ScrollView} from 'react-native';
 import React, {useEffect} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useAppDispatch} from '../../redux/hooks';
-import {setNote} from '../../redux/notes/notesSlice';
-import {formValues} from '../../interfaces/noteInterface';
 
+import {TextInput, Button} from 'react-native-paper';
+
+import {Formik} from 'formik';
+
+import type {StackScreenProps} from '@react-navigation/stack';
 import type {MainStackParams} from '../../types/navigationTypes';
+import {updateNoteValidations} from '../../validations/notes/noteValidation';
+import {useUpdateNoteMutation} from '../../redux/api/notesApi';
 
-type props = StackScreenProps<MainStackParams, 'AddNote'>;
+type props = StackScreenProps<MainStackParams, 'UpdateNote'>;
 
-const AddNote = ({navigation}: props) => {
-  const dispatch = useAppDispatch();
+const updateNote = ({navigation, route}: props) => {
+  const {noteId, content, tags, title} = route.params;
 
-  const [createNote, {isError, isLoading, isSuccess, error, data}] =
-    useCreateNoteMutation();
+  const [updateNote, {isError, isLoading, isSuccess, error}] =
+    useUpdateNoteMutation();
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(setNote({data: data?.note}));
       navigation.goBack();
     }
   }, [isSuccess]);
 
-  const initialValues: formValues = {
-    categoryTitle: '',
-    content: '',
-    tag: '',
-    tags: [],
-    title: '',
-  };
-
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{content: content, tags: [...tags], title: title, tag: ''}}
       validateOnMount={true}
-      onSubmit={values => createNote({...values})}
-      validationSchema={addNoteValidationSchema}>
+      onSubmit={values =>
+        updateNote({
+          noteId: noteId,
+          body: {
+            tags: values.tags,
+            content: values.content,
+            title: values.title,
+          },
+        })
+      }
+      validationSchema={updateNoteValidations}>
       {({
         handleBlur,
         handleChange,
@@ -79,13 +77,7 @@ const AddNote = ({navigation}: props) => {
                     onChangeText={handleChange('tag')}
                     error={!!errors.tag && touched.tag}
                   />
-                  <Button
-                    onPress={() => {
-                      return (
-                        values.tags.push(values.tag),
-                        console.log(values.tag, values.tags)
-                      );
-                    }}>
+                  <Button onPress={() => values.tags.push(values.tag)}>
                     Add Tag
                   </Button>
                 </View>
@@ -93,24 +85,11 @@ const AddNote = ({navigation}: props) => {
                 {errors.tags && <Text>{errors.tags}</Text>}
               </View>
             </View>
-            <TextInput
-              mode="outlined"
-              label="Category"
-              autoCapitalize="none"
-              value={values.categoryTitle}
-              onChangeText={handleChange('categoryTitle')}
-              multiline={true}
-              numberOfLines={5}
-              error={!!errors.categoryTitle && touched.categoryTitle}
-            />
-            {errors.categoryTitle && touched.categoryTitle && (
-              <Text>{errors.categoryTitle}</Text>
-            )}
             <Button
               onPress={handleSubmit}
               disabled={!isValid && isLoading}
               loading={isLoading}>
-              Add Note
+              Update Note
             </Button>
             {isError && (
               <View>
@@ -126,14 +105,13 @@ const AddNote = ({navigation}: props) => {
               icon="delete"
               style={{flexDirection: 'row'}}
               onPress={() => {
-                const tagsArray = values.tags.filter((filteredTag, index) => {
+                values.tags.filter((filteredTag, index) => {
                   if (filteredTag === tag) {
                     values.tags.splice(index, 1);
                     return true;
                   }
                   return false;
                 });
-                console.log(values.tags);
               }}>
               {tag}
             </Button>
@@ -144,4 +122,4 @@ const AddNote = ({navigation}: props) => {
   );
 };
 
-export default AddNote;
+export default updateNote;

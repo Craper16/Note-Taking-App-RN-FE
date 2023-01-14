@@ -3,13 +3,10 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {useAppSelector} from '../redux/hooks';
 
+import type {RootStackParams} from '../types/navigationTypes';
+
 import {createStackNavigator} from '@react-navigation/stack';
 import {AuthScreenStack, MainScreenStack} from './MainNavigation';
-
-export type RootStackParams = {
-  AuthStack: undefined;
-  MainStack: undefined;
-};
 
 const RootStack = createStackNavigator<RootStackParams>();
 

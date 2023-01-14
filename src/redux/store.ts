@@ -2,7 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import authSlice from './auth/authSlice';
 import {authApi} from './api/authApi';
 import {setupListeners} from '@reduxjs/toolkit/dist/query';
-import notesSlice from './auth/notesSlice';
+import notesSlice from './notes/notesSlice';
 import {notesApi} from './api/notesApi';
 
 export const store = configureStore({
