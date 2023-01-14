@@ -9,6 +9,13 @@ export interface noteData {
   creator: string;
 }
 
+export interface updateNoteValues {
+  noteId: string;
+  title: string;
+  content: string;
+  tags: string[];
+}
+
 export interface formValues {
   title: string;
   content: string;
