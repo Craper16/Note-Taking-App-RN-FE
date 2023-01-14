@@ -19,15 +19,9 @@ const Note = ({route, navigation}: props) => {
 
   const dispatch = useAppDispatch();
 
-  const {isError, isFetching, data, error, refetch} = useFetchNoteQuery(noteId);
+  const {isError, isFetching, data, error} = useFetchNoteQuery(noteId);
 
   const [deleteNote, {isLoading, isSuccess}] = useDeleteNoteMutation();
-
-  useEffect(() => {
-    if (data?.note?.title || data?.note?.content || data?.note?.tags) {
-      refetch();
-    }
-  }, [data?.note?.title, data?.note?.content, data?.note?.tags, refetch]);
 
   useEffect(() => {
     if (isSuccess) {
