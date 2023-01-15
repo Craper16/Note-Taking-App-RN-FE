@@ -53,7 +53,7 @@ const Note = ({route, navigation}: props) => {
       ) : (
         <View>
           <Button
-            icon="delete"
+            icon="delete-circle"
             style={styles.deleteIcon}
             textColor="tomato"
             onPress={() =>
