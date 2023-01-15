@@ -1,4 +1,4 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, KeyboardAvoidingView, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
 
 import {TextInput, Button} from 'react-native-paper';
@@ -58,78 +58,96 @@ const UpdateNote = ({navigation, route}: props) => {
         values,
         touched,
       }) => (
-        <ScrollView>
-          <View>
-            <TextInput
-              mode="outlined"
-              label="Title"
-              value={values.title}
-              onChangeText={handleChange('title')}
-              error={!!errors.title && touched.title}
-              onBlur={handleBlur('title')}
-            />
-            {errors.title && touched.title && <Text>{errors.title}</Text>}
-            <TextInput
-              mode="outlined"
-              label="Description"
-              value={values.content}
-              onChangeText={handleChange('content')}
-              error={!!errors.content && touched.content}
-            />
-            {errors.content && touched.content && <Text>{errors.content}</Text>}
+        <KeyboardAvoidingView style={styles.screen}>
+          <ScrollView style={styles.scrollContainer}>
             <View>
+              <TextInput
+                mode="outlined"
+                label="Title"
+                value={values.title}
+                onChangeText={handleChange('title')}
+                error={!!errors.title && touched.title}
+                onBlur={handleBlur('title')}
+              />
+              {errors.title && touched.title && <Text>{errors.title}</Text>}
+              <TextInput
+                mode="outlined"
+                label="Description"
+                value={values.content}
+                multiline
+                numberOfLines={10}
+                onChangeText={handleChange('content')}
+                onBlur={handleBlur('content')}
+                error={!!errors.content && touched.content}
+              />
+              {errors.content && touched.content && (
+                <Text>{errors.content}</Text>
+              )}
               <View>
                 <View>
-                  <TextInput
-                    mode="outlined"
-                    label="Tag"
-                    value={values.tag}
-                    onChangeText={handleChange('tag')}
-                    error={!!errors.tag && touched.tag}
-                  />
-                  <Button onPress={() => values.tags.push(values.tag)}>
-                    Add Tag
-                  </Button>
+                  <View>
+                    <TextInput
+                      mode="outlined"
+                      label="Tag"
+                      value={values.tag}
+                      onChangeText={handleChange('tag')}
+                      onBlur={handleBlur('tag')}
+                      error={!!errors.tag && touched.tag}
+                    />
+                    <Button onPress={() => values.tags.push(values.tag)}>
+                      Add Tag
+                    </Button>
+                  </View>
+                  {errors.tag && touched.tag && <Text>{errors.tag}</Text>}
+                  {errors.tags && <Text>{errors.tags}</Text>}
                 </View>
-                {errors.tag && touched.tag && <Text>{errors.tag}</Text>}
-                {errors.tags && <Text>{errors.tags}</Text>}
               </View>
+              <Button
+                onPress={handleSubmit}
+                disabled={!isValid && isLoading}
+                loading={isLoading}>
+                Update Note
+              </Button>
+              {isError && (
+                <View>
+                  <Text>
+                    {(error as any).data.message || (error as any).error}
+                  </Text>
+                </View>
+              )}
             </View>
-            <Button
-              onPress={handleSubmit}
-              disabled={!isValid && isLoading}
-              loading={isLoading}>
-              Update Note
-            </Button>
-            {isError && (
-              <View>
-                <Text>
-                  {(error as any).data.message || (error as any).error}
-                </Text>
-              </View>
-            )}
-          </View>
-          {values.tags.map((tag, i) => (
-            <Button
-              key={i}
-              icon="delete"
-              style={{flexDirection: 'row'}}
-              onPress={() => {
-                values.tags.filter((filteredTag, index) => {
-                  if (filteredTag === tag) {
-                    values.tags.splice(index, 1);
-                    return true;
-                  }
-                  return false;
-                });
-              }}>
-              {tag}
-            </Button>
-          ))}
-        </ScrollView>
+            {values.tags.map((tag, i) => (
+              <Button
+                key={i}
+                icon="delete"
+                style={{flexDirection: 'row'}}
+                onPress={() => {
+                  values.tags.filter((filteredTag, index) => {
+                    if (filteredTag === tag) {
+                      values.tags.splice(index, 1);
+                      return true;
+                    }
+                    return false;
+                  });
+                }}>
+                {tag}
+              </Button>
+            ))}
+          </ScrollView>
+        </KeyboardAvoidingView>
       )}
     </Formik>
   );
 };
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#1f1f1f',
+  },
+  scrollContainer: {
+    marginBottom: 80,
+  },
+})
 
 export default UpdateNote;
