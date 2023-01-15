@@ -1,6 +1,20 @@
 export type RootStackParams = {
   AuthStack: undefined;
+  BottomRootStack: undefined;
+};
+
+export type BottomRootStackNavigatorParams = {
   MainStack: undefined;
+  CategoryStack: undefined;
+  SettingsStack: undefined;
+};
+
+export type CategoryNavigatorStackParams = {
+  Categories: undefined;
+}
+
+export type SettingsNavigatorStackParams = {
+  Settings: undefined;
 };
 
 export type MainStackParams = {
