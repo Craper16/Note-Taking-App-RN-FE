@@ -14,7 +14,7 @@ import {updateNote as updateNoteData} from '../../redux/notes/notesSlice';
 
 type props = StackScreenProps<MainStackParams, 'UpdateNote'>;
 
-const updateNote = ({navigation, route}: props) => {
+const UpdateNote = ({navigation, route}: props) => {
   const dispatch = useAppDispatch();
 
   const {noteId, content, tags, title} = route.params;
@@ -132,4 +132,4 @@ const updateNote = ({navigation, route}: props) => {
   );
 };
 
-export default updateNote;
+export default UpdateNote;
