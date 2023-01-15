@@ -58,13 +58,7 @@ const Notes = ({navigation}: props) => {
   }, [isEnd, isFetching]);
 
   const renderFooterComponent = () =>
-    isFetching || !isEnd ? (
-      <ActivityIndicator animating={true} />
-    ) : (
-      <View>
-        <Text style={{color: 'white'}}>No more notes to fetch</Text>
-      </View>
-    );
+    isFetching || !isEnd ? <ActivityIndicator animating={true} /> : null;
 
   const renderListEmptyComponent = () =>
     !isFetching && isSuccess ? (
