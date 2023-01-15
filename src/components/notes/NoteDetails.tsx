@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {Button, Card} from 'react-native-paper';
 
@@ -22,31 +22,38 @@ const NoteDetails = ({
   category,
   handleUpdate,
 }: props) => {
+  const [showTags, setShowTags] = useState(false);
+
+  const handleShowingTags = () => setShowTags(!showTags);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.titleStyle}>{title}</Text>
-      <ScrollView>
-        <Text style={styles.textStyle}>{content}</Text>
-        <Text style={styles.textStyle}>{category}</Text>
-        <Text style={styles.textStyle}>
-          Created at: {createdAt.toString().split('T')[0]}
-        </Text>
-        <Text style={styles.textStyle}>
-          Updated at: {updatedAt.toString().split('T')[0]}
-        </Text>
-        <Card style={styles.tagsContainer}>
-          {tags.map((tag, i) => {
-            return (
-              <Text key={i} style={styles.textStyle}>
-                {tag}
-              </Text>
-            );
-          })}
-        </Card>
-        <Button mode="contained" onPress={handleUpdate}>
+      <View>
+        <Button icon='update' mode="contained" onPress={handleUpdate}>
           Update Note
         </Button>
-      </ScrollView>
+        <Text style={styles.titleStyle}>{title}</Text>
+        <ScrollView>
+          <Text style={styles.textStyle}>{content}</Text>
+          <Text style={styles.textStyle}>{category}</Text>
+          <Text style={styles.textStyle}>
+            Created at: {createdAt.toString().split('T')[0]}
+          </Text>
+          <Text style={styles.textStyle}>
+            Updated at: {updatedAt.toString().split('T')[0]}
+          </Text>
+          <Button onPress={handleShowingTags}>Tags</Button>
+          {showTags && (
+            <Card style={styles.tagsContainer}>
+              {tags.map((tag, i) => (
+                <Text key={i} style={styles.textStyle}>
+                  {tag}
+                </Text>
+              ))}
+            </Card>
+          )}
+        </ScrollView>
+      </View>
     </View>
   );
 };

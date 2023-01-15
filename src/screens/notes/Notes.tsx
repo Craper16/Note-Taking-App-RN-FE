@@ -76,9 +76,7 @@ const Notes = ({navigation}: props) => {
 
   const renderNote = ({item}: {item: noteData}) => (
     <TouchableWithoutFeedback
-      onPress={() =>
-        navigation.navigate('Note', {noteId: item._id})
-      }>
+      onPress={() => navigation.navigate('Note', {noteId: item._id})}>
       <Note
         key={item._id}
         category={item.category}

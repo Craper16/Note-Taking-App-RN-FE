@@ -9,33 +9,28 @@ import type {StackScreenProps} from '@react-navigation/stack';
 import type {MainStackParams} from '../../types/navigationTypes';
 import {updateNoteValidations} from '../../validations/notes/noteValidation';
 import {useUpdateNoteMutation} from '../../redux/api/notesApi';
-import {useAppDispatch, useAppSelector} from '../../redux/hooks';
+import {useAppDispatch} from '../../redux/hooks';
 import {updateNote as updateNoteData} from '../../redux/notes/notesSlice';
 
 type props = StackScreenProps<MainStackParams, 'UpdateNote'>;
 
 const updateNote = ({navigation, route}: props) => {
   const dispatch = useAppDispatch();
-  const {notesData} = useAppSelector(state => state.notes);
 
   const {noteId, content, tags, title} = route.params;
 
   const [updateNote, {isError, isLoading, isSuccess, error, data}] =
     useUpdateNoteMutation();
 
-  // console.log(data);
-
   useEffect(() => {
     if (isSuccess) {
       dispatch(
         updateNoteData({
           noteId,
-          tags: data?.note.tags,
-          content: data?.note.content,
-          title: data?.note.title,
+          data: data?.note,
         }),
       );
-      navigation.pop(2);
+      navigation.navigate('Notes');
     }
   }, [isSuccess]);
 
