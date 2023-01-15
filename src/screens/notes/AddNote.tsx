@@ -128,6 +128,7 @@ const AddNote = ({navigation}: props) => {
                   showDropDown={() => setShowDropDown(true)}
                   onDismiss={() => setShowDropDown(false)}
                   list={categoryTitles}
+                  activeColor="#8A2BE2"
                 />
                 {errors.categoryTitle && touched.categoryTitle && (
                   <Text style={styles.errorText}>{errors.categoryTitle}</Text>
