@@ -5,7 +5,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {Text, Button, TextInput} from 'react-native-paper';
 import {useSignUpUserMutation} from '../../redux/api/authApi';
@@ -17,6 +17,9 @@ import {storeKeychainData} from '../../storage/keychain';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
+
+  const [showPassword, setShowPassword] = useState(true);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(true);
 
   const [signUpUser, {data, isError, error, isLoading, isSuccess}] =
     useSignUpUserMutation();
@@ -91,7 +94,13 @@ const Signup = () => {
                     mode="flat"
                     theme={{colors: {primary: 'black'}}}
                     autoCorrect={false}
-                    secureTextEntry
+                    secureTextEntry={showPassword}
+                    right={
+                      <TextInput.Icon
+                        icon={showPassword ? 'eye' : 'eye-off'}
+                        onPress={() => setShowPassword(!showPassword)}
+                      />
+                    }
                     label="Password"
                     error={!!errors.password && touched.password}
                   />
@@ -110,7 +119,15 @@ const Signup = () => {
                     mode="flat"
                     theme={{colors: {primary: 'black'}}}
                     autoCorrect={false}
-                    secureTextEntry
+                    right={
+                      <TextInput.Icon
+                        icon={showConfirmPassword ? 'eye' : 'eye-off'}
+                        onPress={() =>
+                          setShowConfirmPassword(!showConfirmPassword)
+                        }
+                      />
+                    }
+                    secureTextEntry={showConfirmPassword}
                     label="Confirm Password"
                     error={!!errors.confirmPassword && touched.confirmPassword}
                   />

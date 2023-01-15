@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {Text, Button, TextInput} from 'react-native-paper';
 import {
@@ -16,12 +16,14 @@ import {loginValidationSchema} from '../../validations/auth/authValidations';
 import {Formik} from 'formik';
 import {storeKeychainData} from '../../storage/keychain';
 import type {StackScreenProps} from '@react-navigation/stack';
-import type { AuthStackParams } from '../../types/navigationTypes';
+import type {AuthStackParams} from '../../types/navigationTypes';
 
 type props = StackScreenProps<AuthStackParams, 'Login'>;
 
 const Login = ({navigation}: props) => {
   const dispatch = useAppDispatch();
+
+  const [showPassword, setShowPassword] = useState(true);
 
   const [signInUser, {data, isError, error, isLoading, isSuccess}] =
     useSignInUserMutation();
@@ -76,7 +78,7 @@ const Login = ({navigation}: props) => {
                     onBlur={handleBlur('username')}
                     value={values.username}
                     autoCorrect={false}
-                    theme={{colors: {primary: 'black' }}}
+                    theme={{colors: {primary: 'black'}}}
                     mode="flat"
                     label="Username"
                     error={!!errors.username && touched.username}
@@ -94,9 +96,15 @@ const Login = ({navigation}: props) => {
                     onBlur={handleBlur('password')}
                     value={values.password}
                     mode="flat"
-                    theme={{colors: {primary: 'black' }}}
+                    theme={{colors: {primary: 'black'}}}
                     autoCorrect={false}
-                    secureTextEntry
+                    right={
+                      <TextInput.Icon
+                        icon={showPassword ? 'eye' : 'eye-off'}
+                        onPress={() => setShowPassword(!showPassword)}
+                      />
+                    }
+                    secureTextEntry={showPassword}
                     label="Password"
                     error={!!errors.password && touched.password}
                   />
