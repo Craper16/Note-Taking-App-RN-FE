@@ -1,6 +1,6 @@
 export interface noteData {
   _id: string;
-  category: string;
+  category: {_id: string; title: string; createdAt: Date; updatedAt: Date};
   title: string;
   content: string;
   tags: string[];

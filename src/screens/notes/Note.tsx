@@ -56,10 +56,10 @@ const Note = ({route, navigation}: props) => {
             icon="delete"
             style={styles.deleteIcon}
             onPress={() => deleteNote(noteId)}>
-            Delete note
+            Delete Note
           </Button>
           <NoteDetails
-            category={data.note.category}
+            category={data.note.category.title}
             content={data.note.content}
             createdAt={data.note.createdAt}
             tags={data.note.tags}

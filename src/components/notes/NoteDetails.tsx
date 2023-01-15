@@ -34,8 +34,9 @@ const NoteDetails = ({
         </Button>
         <Text style={styles.titleStyle}>{title}</Text>
         <ScrollView>
+          <Text style={styles.textStyle}>Description:</Text>
           <Text style={styles.textStyle}>{content}</Text>
-          <Text style={styles.textStyle}>{category}</Text>
+          <Text style={styles.textStyle}>Category: {category}</Text>
           <Text style={styles.textStyle}>
             Created at: {createdAt.toString().split('T')[0]}
           </Text>

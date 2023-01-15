@@ -51,7 +51,6 @@ const Notes = ({navigation}: props) => {
 
   const handleLoadMore = useCallback(() => {
     if (!isEnd && !isFetching) {
-      console.log('isRunning');
       return setPage(page + 1);
     } else {
       return;
@@ -79,7 +78,7 @@ const Notes = ({navigation}: props) => {
       onPress={() => navigation.navigate('Note', {noteId: item._id})}>
       <Note
         key={item._id}
-        category={item.category}
+        category={item.category.title}
         title={item.title}
         createdAt={item.createdAt}
         updatedAt={item.updatedAt}

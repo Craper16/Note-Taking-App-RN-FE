@@ -18,7 +18,7 @@ const Note = ({createdAt, title, category, updatedAt}: props) => {
         titleNumberOfLines={2}
       />
       <Divider bold />
-      <Paragraph>{category}</Paragraph>
+      <Paragraph>Category: {category}</Paragraph>
       <Divider bold />
       <Text>Created at: {createdAt.toString().split('T')[0]}</Text>
       <Text>Updated at: {updatedAt.toString().split('T')[0]}</Text>
@@ -29,10 +29,10 @@ const Note = ({createdAt, title, category, updatedAt}: props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#aab1eebb',
+    margin: 15,
     padding: 30,
-    margin: 30,
     flex: 1,
-    width: '90%',
+    width: '93%',
   },
   title: {
     textAlign: 'center',
