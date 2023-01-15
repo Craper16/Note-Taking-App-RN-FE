@@ -58,7 +58,9 @@ const Notes = ({navigation}: props) => {
   }, [isEnd, isFetching]);
 
   const renderFooterComponent = () =>
-    isFetching || !isEnd ? <ActivityIndicator animating={true} /> : null;
+    (isFetching || !isEnd) && !isError ? (
+      <ActivityIndicator animating={true} />
+    ) : null;
 
   const renderListEmptyComponent = () =>
     !isFetching && isSuccess ? (
@@ -87,7 +89,9 @@ const Notes = ({navigation}: props) => {
       </Text>
       {isError && (
         <View>
-          <Text>{(error as any).data?.message || (error as any).error}</Text>
+          <Text style={styles.errorApiResponseText}>
+            {(error as any).data?.message || (error as any).error}
+          </Text>
         </View>
       )}
       <FlashList
@@ -134,6 +138,11 @@ const styles = StyleSheet.create({
   },
   actions: {
     marginBottom: 20,
+  },
+  errorApiResponseText: {
+    textAlign: 'center',
+    color: 'tomato',
+    margin: 7,
   },
 });
 

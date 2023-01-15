@@ -41,7 +41,9 @@ const Note = ({route, navigation}: props) => {
   if (isError) {
     return (
       <View style={styles.screen}>
-        <Text>{(error as any).data.message || (error as any).error}</Text>
+        <Text style={styles.errorApiResponseText}>
+          {(error as any).data.message || (error as any).error}
+        </Text>
       </View>
     );
   }
@@ -118,6 +120,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 20,
     justifyContent: 'center',
+  },
+  errorApiResponseText: {
+    textAlign: 'center',
+    color: 'tomato',
+    margin: 7,
   },
 });
 

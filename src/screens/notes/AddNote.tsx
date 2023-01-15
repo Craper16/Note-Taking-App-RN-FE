@@ -4,18 +4,27 @@ import {useCreateNoteMutation} from '../../redux/api/notesApi';
 import {Formik} from 'formik';
 import {addNoteValidationSchema} from '../../validations/notes/noteValidation';
 import {StackScreenProps} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {useAppDispatch} from '../../redux/hooks';
 import {setNote} from '../../redux/notes/notesSlice';
 import {formValues} from '../../interfaces/noteInterface';
 
 import type {MainStackParams} from '../../types/navigationTypes';
+import DropDown from 'react-native-paper-dropdown';
 
 type props = StackScreenProps<MainStackParams, 'AddNote'>;
 
+const categoryTitles = [
+  {label: 'whatever', value: 'whatever'},
+  {label: 'acategory', value: 'acategory'},
+  {label: 'indeed', value: 'indeed'},
+];
+
 const AddNote = ({navigation}: props) => {
   const dispatch = useAppDispatch();
+
+  const [showDropDown, setShowDropDown] = useState(false);
 
   const [createNote, {isError, isLoading, isSuccess, error, data}] =
     useCreateNoteMutation();
@@ -57,32 +66,38 @@ const AddNote = ({navigation}: props) => {
           <ScrollView style={styles.scrollContainer}>
             <View>
               <TextInput
-                mode="outlined"
+                style={styles.textInputStyle}
+                mode="flat"
                 label="Title"
                 value={values.title}
                 onChangeText={handleChange('title')}
                 error={!!errors.title && touched.title}
                 onBlur={handleBlur('title')}
               />
-              {errors.title && touched.title && <Text>{errors.title}</Text>}
+              {errors.title && touched.title && (
+                <Text style={styles.errorText}>{errors.title}</Text>
+              )}
               <TextInput
-                mode="outlined"
+                mode="flat"
                 label="Description"
+                style={styles.textInputStyle}
                 value={values.content}
                 multiline={true}
                 numberOfLines={5}
                 onChangeText={handleChange('content')}
+                onBlur={handleBlur('content')}
                 error={!!errors.content && touched.content}
               />
               {errors.content && touched.content && (
-                <Text>{errors.content}</Text>
+                <Text style={styles.errorText}>{errors.content}</Text>
               )}
               <View>
                 <View>
                   <View>
                     <TextInput
-                      mode="outlined"
+                      mode="flat"
                       label="Tag"
+                      style={styles.textInputStyle}
                       value={values.tag}
                       onChangeText={handleChange('tag')}
                       error={!!errors.tag && touched.tag}
@@ -95,21 +110,29 @@ const AddNote = ({navigation}: props) => {
                       Add Tag
                     </Button>
                   </View>
-                  {errors.tag && touched.tag && <Text>{errors.tag}</Text>}
-                  {errors.tags && <Text>{errors.tags}</Text>}
+                  {errors.tag && touched.tag && (
+                    <Text style={styles.errorText}>{errors.tag}</Text>
+                  )}
+                  {errors.tags && (
+                    <Text style={styles.errorText}>{errors.tags}</Text>
+                  )}
                 </View>
               </View>
-              <TextInput
-                mode="outlined"
-                label="Category"
-                autoCapitalize="none"
-                value={values.categoryTitle}
-                onChangeText={handleChange('categoryTitle')}
-                error={!!errors.categoryTitle && touched.categoryTitle}
-              />
-              {errors.categoryTitle && touched.categoryTitle && (
-                <Text>{errors.categoryTitle}</Text>
-              )}
+              <View style={styles.textInputStyle}>
+                <DropDown
+                  label="Category"
+                  mode="flat"
+                  visible={showDropDown}
+                  value={values.categoryTitle}
+                  setValue={handleChange('categoryTitle')}
+                  showDropDown={() => setShowDropDown(true)}
+                  onDismiss={() => setShowDropDown(false)}
+                  list={categoryTitles}
+                />
+                {errors.categoryTitle && touched.categoryTitle && (
+                  <Text style={styles.errorText}>{errors.categoryTitle}</Text>
+                )}
+              </View>
               <Button
                 onPress={handleSubmit}
                 disabled={!isValid && isLoading}
@@ -118,7 +141,7 @@ const AddNote = ({navigation}: props) => {
               </Button>
               {isError && (
                 <View>
-                  <Text>
+                  <Text style={styles.errorApiResponseText}>
                     {(error as any).data.message || (error as any).error}
                   </Text>
                 </View>
@@ -149,8 +172,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1f1f1f',
   },
+  textInputStyle: {
+    margin: 20,
+  },
   scrollContainer: {
     marginBottom: 80,
+  },
+  errorApiResponseText: {
+    textAlign: 'center',
+    color: 'tomato',
+    margin: 7,
+  },
+  errorText: {
+    textAlign: 'center',
+    color: 'tomato',
   },
 });
 
