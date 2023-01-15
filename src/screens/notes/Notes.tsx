@@ -63,7 +63,7 @@ const Notes = ({navigation}: props) => {
   const renderListEmptyComponent = () =>
     !isFetching && isSuccess ? (
       <View>
-        <Text style={{color: 'white'}}>No notes found, try adding some</Text>
+        <Text style={styles.emptyList}>No notes found, try adding some</Text>
       </View>
     ) : null;
 
@@ -126,6 +126,11 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: '#1f1f1f',
+  },
+  emptyList: {
+    color: '#8A2BE2',
+    margin: 40,
+    textAlign: 'center',
   },
   actions: {
     marginBottom: 20,

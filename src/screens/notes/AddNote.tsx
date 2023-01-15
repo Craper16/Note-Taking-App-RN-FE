@@ -80,11 +80,9 @@ const AddNote = ({navigation}: props) => {
                     error={!!errors.tag && touched.tag}
                   />
                   <Button
-                    onPress={() => {
-                      return (
-                        values.tags.push(values.tag),
-                        console.log(values.tag, values.tags)
-                      );
+                    onPress={async () => {
+                      await values.tags.push(values.tag);
+                      values.tag = initialValues.tag;
                     }}>
                     Add Tag
                   </Button>
@@ -126,14 +124,9 @@ const AddNote = ({navigation}: props) => {
               icon="delete"
               style={{flexDirection: 'row'}}
               onPress={() => {
-                const tagsArray = values.tags.filter((filteredTag, index) => {
-                  if (filteredTag === tag) {
-                    values.tags.splice(index, 1);
-                    return true;
-                  }
-                  return false;
-                });
-                console.log(values.tags);
+                values.tags = [
+                  ...values.tags.filter(filteredTag => filteredTag !== tag),
+                ];
               }}>
               {tag}
             </Button>

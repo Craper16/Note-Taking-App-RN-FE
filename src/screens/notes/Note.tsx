@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   useDeleteNoteMutation,
@@ -32,15 +32,15 @@ const Note = ({route, navigation}: props) => {
 
   if (isLoading) {
     return (
-      <View>
-        <ActivityIndicator animating={true} />
+      <View style={styles.screen}>
+        <ActivityIndicator animating={true} style={styles.loadingIndicator} />
       </View>
     );
   }
 
   if (isError) {
     return (
-      <View>
+      <View style={styles.screen}>
         <Text>{(error as any).data.message || (error as any).error}</Text>
       </View>
     );
@@ -55,25 +55,44 @@ const Note = ({route, navigation}: props) => {
           <Button
             icon="delete"
             style={styles.deleteIcon}
-            onPress={() => deleteNote(noteId)}>
+            textColor="tomato"
+            onPress={() =>
+              Alert.alert(
+                'Warning!',
+                'Are you sure you want to delete this note?',
+                [
+                  {
+                    text: 'Delete',
+                    style: 'destructive',
+                    onPress: () => deleteNote(noteId),
+                  },
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                ],
+              )
+            }>
             Delete Note
           </Button>
-          <NoteDetails
-            category={data.note.category.title}
-            content={data.note.content}
-            createdAt={data.note.createdAt}
-            tags={data.note.tags}
-            title={data.note.title}
-            updatedAt={data.note.updatedAt}
-            handleUpdate={() =>
-              navigation.navigate('UpdateNote', {
-                noteId: noteId,
-                content: data?.note.content,
-                tags: data?.note.tags,
-                title: data?.note.title,
-              })
-            }
-          />
+          <ScrollView>
+            <NoteDetails
+              category={data.note.category.title}
+              content={data.note.content}
+              createdAt={data.note.createdAt}
+              tags={data.note.tags}
+              title={data.note.title}
+              updatedAt={data.note.updatedAt}
+              handleUpdate={() =>
+                navigation.navigate('UpdateNote', {
+                  noteId: noteId,
+                  content: data?.note.content,
+                  tags: data?.note.tags,
+                  title: data?.note.title,
+                })
+              }
+            />
+          </ScrollView>
         </View>
       )}
     </View>
@@ -94,6 +113,11 @@ const styles = StyleSheet.create({
   deleteIcon: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
+  },
+  loadingIndicator: {
+    textAlign: 'center',
+    margin: 20,
+    justifyContent: 'center',
   },
 });
 

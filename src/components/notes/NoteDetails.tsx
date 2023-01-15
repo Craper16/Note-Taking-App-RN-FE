@@ -1,7 +1,7 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 
-import {Button, Card} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 
 type props = {
   title: string;
@@ -28,32 +28,36 @@ const NoteDetails = ({
 
   return (
     <View style={styles.container}>
-      <View>
-        <Button icon='update' mode="contained" onPress={handleUpdate}>
-          Update Note
-        </Button>
-        <Text style={styles.titleStyle}>{title}</Text>
-        <ScrollView>
-          <Text style={styles.textStyle}>Description:</Text>
-          <Text style={styles.textStyle}>{content}</Text>
-          <Text style={styles.textStyle}>Category: {category}</Text>
-          <Text style={styles.textStyle}>
-            Created at: {createdAt.toString().split('T')[0]}
-          </Text>
-          <Text style={styles.textStyle}>
-            Updated at: {updatedAt.toString().split('T')[0]}
-          </Text>
-          <Button onPress={handleShowingTags}>Tags</Button>
-          {showTags && (
-            <Card style={styles.tagsContainer}>
-              {tags.map((tag, i) => (
+      <Button icon="update" mode="contained" onPress={handleUpdate}>
+        Update Note
+      </Button>
+      <Text style={styles.titleStyle}>{title}</Text>
+      <View style={styles.scrollContainer}>
+        <Text style={styles.descriptionTitle}>Description:</Text>
+        <Text style={styles.descriptionStyle}>{content}</Text>
+        <Text style={styles.categoryText}>Category: {category}</Text>
+        <Text style={styles.textStyle}>
+          Created at: {createdAt.toString().split('T')[0]}
+          {' , '}
+          {createdAt.toString().split('T')[1].split('.')[0]}
+        </Text>
+        <Text style={styles.textStyle}>
+          Updated at: {updatedAt.toString().split('T')[0]}
+          {' , '}
+          {updatedAt.toString().split('T')[1].split('.')[0]}
+        </Text>
+        <Button onPress={handleShowingTags}>Tags</Button>
+        {showTags && (
+          <View style={styles.tagsContainer}>
+            {tags.map((tag, i) => (
+              <View>
                 <Text key={i} style={styles.textStyle}>
                   {tag}
                 </Text>
-              ))}
-            </Card>
-          )}
-        </ScrollView>
+              </View>
+            ))}
+          </View>
+        )}
       </View>
     </View>
   );
@@ -62,6 +66,11 @@ const NoteDetails = ({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1f1f1f',
+    marginBottom: 60,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    flexDirection: 'column',
   },
   titleStyle: {
     color: 'white',
@@ -70,16 +79,32 @@ const styles = StyleSheet.create({
     fontSize: 34,
     margin: 30,
   },
-  textStyle: {
+  descriptionTitle: {
     color: 'white',
-    margin: 20,
+    fontSize: 22,
+    margin: 6,
+  },
+  descriptionStyle: {
+    color: 'white',
+    margin: 10,
+    padding: 5,
     fontSize: 18,
   },
+  categoryText: {
+    color: 'white',
+    fontSize: 22,
+    margin: 6,
+    padding: 2,
+  },
+  textStyle: {
+    color: 'white',
+    margin: 6,
+    padding: 2,
+    fontSize: 14,
+  },
   tagsContainer: {
-    backgroundColor: '#1f1f1f',
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

@@ -15,13 +15,21 @@ const Note = ({createdAt, title, category, updatedAt}: props) => {
       <Card.Title
         title={title}
         titleVariant="headlineMedium"
-        titleNumberOfLines={2}
+        titleNumberOfLines={3}
       />
       <Divider bold />
       <Paragraph>Category: {category}</Paragraph>
       <Divider bold />
-      <Text>Created at: {createdAt.toString().split('T')[0]}</Text>
-      <Text>Updated at: {updatedAt.toString().split('T')[0]}</Text>
+      <Text>
+        Created at: {createdAt.toString().split('T')[0]}
+        {' , '}
+        {createdAt.toString().split('T')[1].split('.')[0]}
+      </Text>
+      <Text>
+        Updated at: {updatedAt.toString().split('T')[0]}
+        {' , '}
+        {updatedAt.toString().split('T')[1].split('.')[0]}
+      </Text>
     </Card>
   );
 };
