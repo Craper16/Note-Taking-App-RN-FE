@@ -6,15 +6,21 @@ export type RootStackParams = {
 export type BottomRootStackNavigatorParams = {
   MainStack: undefined;
   CategoryStack: undefined;
+  SearchStack: undefined;
   SettingsStack: undefined;
+};
+
+export type SearchNavigatorStackParams = {
+  Search: undefined;
 };
 
 export type CategoryNavigatorStackParams = {
   Categories: undefined;
-}
+};
 
 export type SettingsNavigatorStackParams = {
   Settings: undefined;
+  AboutMe: {username: string};
 };
 
 export type MainStackParams = {

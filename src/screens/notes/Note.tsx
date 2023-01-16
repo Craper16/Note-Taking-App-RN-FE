@@ -6,7 +6,7 @@ import {
 } from '../../redux/api/notesApi';
 import {StackScreenProps} from '@react-navigation/stack';
 import NoteDetails from '../../components/notes/NoteDetails';
-import {ActivityIndicator, Button, IconButton} from 'react-native-paper';
+import {ActivityIndicator, Button} from 'react-native-paper';
 
 import type {MainStackParams} from '../../types/navigationTypes';
 import {useAppDispatch} from '../../redux/hooks';

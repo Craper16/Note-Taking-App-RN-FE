@@ -8,6 +8,7 @@ import type {
   MainStackParams,
   SettingsNavigatorStackParams,
   CategoryNavigatorStackParams,
+  SearchNavigatorStackParams,
 } from '../types/navigationTypes';
 
 import Login from '../screens/auth/Login';
@@ -20,8 +21,11 @@ import AddNote from '../screens/notes/AddNote';
 import UpdateNote from '../screens/notes/UpdateNote';
 import Settings from '../screens/settings/Settings';
 import Categories from '../screens/categories/Categories';
+import AboutMe from '../screens/settings/AboutMe';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {Text} from 'react-native-paper';
+import Search from '../screens/search/Search';
 
 const BottomRootStackNavigator =
   createBottomTabNavigator<BottomRootStackNavigatorParams>();
@@ -34,15 +38,41 @@ export const BottomRootStack = () => {
         tabBarIcon: ({color, focused, size}) => {
           let iconName = '';
 
-          if (route.name === 'MainStack') {
-            iconName = focused ? 'md-reader' : 'md-reader-outline';
-          } else if (route.name === 'SettingsStack') {
-            iconName = focused ? 'settings' : 'settings-outline';
-          } else if (route.name === 'CategoryStack') {
-            iconName = focused ? 'md-list' : 'md-list-outline';
+          switch (route.name) {
+            case 'MainStack':
+              iconName = focused ? 'md-reader' : 'md-reader-outline';
+              break;
+            case 'CategoryStack':
+              iconName = focused ? 'md-list' : 'md-list-outline';
+              break;
+            case 'SearchStack':
+              iconName = focused ? 'search' : 'search-outline';
+              break;
+            case 'SettingsStack':
+              iconName = focused ? 'settings' : 'settings-outline';
+              break;
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarLabel: ({children, color}) => {
+          switch (route.name) {
+            case 'MainStack':
+              children = 'Notes';
+              break;
+            case 'CategoryStack':
+              children = 'Categories';
+              break;
+            case 'SearchStack':
+              children = 'Search';
+              break;
+            case 'SettingsStack':
+              children = 'Settings';
+              break;
+            default:
+              children = '';
+          }
+          return <Text style={{color: color, fontSize: 11}}>{children}</Text>;
         },
         tabBarActiveTintColor: '#8A2BE2',
         tabBarActiveBackgroundColor: '#1f1f1f',
@@ -59,11 +89,26 @@ export const BottomRootStack = () => {
         options={{headerShown: false}}
       />
       <BottomRootStackNavigator.Screen
+        name="SearchStack"
+        component={SearchScreenStack}
+        options={{headerShown: false}}
+      />
+      <BottomRootStackNavigator.Screen
         name="SettingsStack"
         component={SettingsScreenStack}
         options={{headerShown: false}}
       />
     </BottomRootStackNavigator.Navigator>
+  );
+};
+
+const SearchNavigatorStack = createStackNavigator<SearchNavigatorStackParams>();
+
+export const SearchScreenStack = () => {
+  return (
+    <SearchNavigatorStack.Navigator>
+      <SearchNavigatorStack.Screen name="Search" component={Search} />
+    </SearchNavigatorStack.Navigator>
   );
 };
 
@@ -83,8 +128,9 @@ const SettingsNavigatorStack =
 
 export const SettingsScreenStack = () => {
   return (
-    <SettingsNavigatorStack.Navigator>
+    <SettingsNavigatorStack.Navigator initialRouteName="Settings">
       <SettingsNavigatorStack.Screen name="Settings" component={Settings} />
+      <SettingsNavigatorStack.Screen name="AboutMe" component={AboutMe} />
     </SettingsNavigatorStack.Navigator>
   );
 };

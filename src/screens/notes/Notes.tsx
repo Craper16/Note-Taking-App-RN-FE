@@ -1,10 +1,8 @@
 import {View, Text, StyleSheet, RefreshControl} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
-import {Button, ActivityIndicator, IconButton} from 'react-native-paper';
-import {defaultState} from '../../redux/auth/authSlice';
+import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {useFetchNotesQuery} from '../../redux/api/notesApi';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks';
-import {resetKeychainData} from '../../storage/keychain';
 import {FlashList} from '@shopify/flash-list';
 import {defaultNotes, setNotes} from '../../redux/notes/notesSlice';
 import Note from '../../components/notes/Note';
@@ -21,8 +19,6 @@ const Notes = ({navigation}: props) => {
   const [page, setPage] = useState(1);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const {username} = useAppSelector(state => state.auth);
-
   const {notesData, isEnd} = useAppSelector(state => state.notes);
 
   const {isError, error, data, isFetching, isSuccess} =
@@ -33,12 +29,6 @@ const Notes = ({navigation}: props) => {
       dispatch(setNotes({data: data?.notes}));
     }
   }, [data, dispatch]);
-
-  const handleLogout = () => {
-    resetKeychainData();
-    dispatch(defaultState());
-    dispatch(defaultNotes());
-  };
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -84,9 +74,6 @@ const Notes = ({navigation}: props) => {
 
   return (
     <View style={styles.screen}>
-      <Text style={{textAlign: 'center', color: '#8A2BE2', marginTop: 20}}>
-        Welcome {username}
-      </Text>
       {isError && (
         <View>
           <Text style={styles.errorApiResponseText}>
@@ -107,9 +94,6 @@ const Notes = ({navigation}: props) => {
         estimatedItemSize={200}
         renderItem={renderNote}
       />
-      <Button style={styles.actions} onPress={handleLogout}>
-        Logout
-      </Button>
     </View>
   );
 };
