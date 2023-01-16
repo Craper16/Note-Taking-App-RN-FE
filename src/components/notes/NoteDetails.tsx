@@ -2,6 +2,7 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 
 import {Button} from 'react-native-paper';
+import {Colors} from '../../config/colors/colors';
 
 type props = {
   title: string;
@@ -65,7 +66,7 @@ const NoteDetails = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
     marginBottom: 60,
   },
   scrollContainer: {
@@ -73,31 +74,31 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   titleStyle: {
-    color: 'white',
+    color: Colors.text,
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 34,
     margin: 30,
   },
   descriptionTitle: {
-    color: 'white',
+    color: Colors.text,
     fontSize: 22,
     margin: 6,
   },
   descriptionStyle: {
-    color: 'white',
+    color: Colors.text,
     margin: 10,
     padding: 5,
     fontSize: 18,
   },
   categoryText: {
-    color: 'white',
+    color: Colors.text,
     fontSize: 22,
     margin: 6,
     padding: 2,
   },
   textStyle: {
-    color: 'white',
+    color: Colors.text,
     margin: 6,
     padding: 2,
     fontSize: 14,

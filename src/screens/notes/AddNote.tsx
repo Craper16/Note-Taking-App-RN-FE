@@ -12,6 +12,7 @@ import {formValues} from '../../interfaces/noteInterface';
 
 import type {MainStackParams} from '../../types/navigationTypes';
 import DropDown from 'react-native-paper-dropdown';
+import { Colors } from '../../config/colors/colors';
 
 type props = StackScreenProps<MainStackParams, 'AddNote'>;
 
@@ -128,7 +129,7 @@ const AddNote = ({navigation}: props) => {
                   showDropDown={() => setShowDropDown(true)}
                   onDismiss={() => setShowDropDown(false)}
                   list={categoryTitles}
-                  activeColor="#8A2BE2"
+                  activeColor={Colors.secondary}
                 />
                 {errors.categoryTitle && touched.categoryTitle && (
                   <Text style={styles.errorText}>{errors.categoryTitle}</Text>
@@ -171,7 +172,7 @@ const AddNote = ({navigation}: props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   textInputStyle: {
     margin: 20,

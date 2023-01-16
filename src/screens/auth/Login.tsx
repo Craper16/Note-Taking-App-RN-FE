@@ -17,6 +17,7 @@ import {Formik} from 'formik';
 import {storeKeychainData} from '../../storage/keychain';
 import type {StackScreenProps} from '@react-navigation/stack';
 import type {AuthStackParams} from '../../types/navigationTypes';
+import { Colors } from '../../config/colors/colors';
 
 type props = StackScreenProps<AuthStackParams, 'Login'>;
 
@@ -140,7 +141,7 @@ const Login = ({navigation}: props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   mainContainer: {
     alignItems: 'center',
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: '#8A2BE2',
+    color: Colors.secondary,
   },
   inputContainer: {
     width: '80%',
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginTop: 5,
-    color: 'red',
+    color: 'tomato',
   },
   apiErrorsContainer: {
     width: '100%',

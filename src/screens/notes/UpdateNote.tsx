@@ -1,4 +1,10 @@
-import {View, Text, ScrollView, KeyboardAvoidingView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  StyleSheet,
+} from 'react-native';
 import React, {useEffect} from 'react';
 
 import {TextInput, Button} from 'react-native-paper';
@@ -11,6 +17,7 @@ import {updateNoteValidations} from '../../validations/notes/noteValidation';
 import {useUpdateNoteMutation} from '../../redux/api/notesApi';
 import {useAppDispatch} from '../../redux/hooks';
 import {updateNote as updateNoteData} from '../../redux/notes/notesSlice';
+import {Colors} from '../../config/colors/colors';
 
 type props = StackScreenProps<MainStackParams, 'UpdateNote'>;
 
@@ -62,16 +69,18 @@ const UpdateNote = ({navigation, route}: props) => {
           <ScrollView style={styles.scrollContainer}>
             <View>
               <TextInput
-                mode="outlined"
+                style={styles.textInputStyle}
+                mode="flat"
                 label="Title"
                 value={values.title}
                 onChangeText={handleChange('title')}
                 error={!!errors.title && touched.title}
                 onBlur={handleBlur('title')}
               />
-              {errors.title && touched.title && <Text>{errors.title}</Text>}
+              {errors.title && touched.title && <Text style={styles.errorText}>{errors.title}</Text>}
               <TextInput
-                mode="outlined"
+                style={styles.textInputStyle}
+                mode="flat"
                 label="Description"
                 value={values.content}
                 multiline
@@ -81,25 +90,30 @@ const UpdateNote = ({navigation, route}: props) => {
                 error={!!errors.content && touched.content}
               />
               {errors.content && touched.content && (
-                <Text>{errors.content}</Text>
+                <Text style={styles.errorText}>{errors.content}</Text>
               )}
               <View>
                 <View>
                   <View>
                     <TextInput
-                      mode="outlined"
+                      style={styles.textInputStyle}
+                      mode="flat"
                       label="Tag"
                       value={values.tag}
                       onChangeText={handleChange('tag')}
                       onBlur={handleBlur('tag')}
                       error={!!errors.tag && touched.tag}
                     />
+                    {errors.tag && touched.tag && (
+                      <Text style={styles.errorText}>{errors.tag}</Text>
+                    )}
+                    {errors.tags && (
+                      <Text style={styles.errorText}>{errors.tags}</Text>
+                    )}
                     <Button onPress={() => values.tags.push(values.tag)}>
                       Add Tag
                     </Button>
                   </View>
-                  {errors.tag && touched.tag && <Text>{errors.tag}</Text>}
-                  {errors.tags && <Text>{errors.tags}</Text>}
                 </View>
               </View>
               <Button
@@ -110,7 +124,7 @@ const UpdateNote = ({navigation, route}: props) => {
               </Button>
               {isError && (
                 <View>
-                  <Text>
+                  <Text style={styles.errorApiResponseText}>
                     {(error as any).data.message || (error as any).error}
                   </Text>
                 </View>
@@ -143,11 +157,23 @@ const UpdateNote = ({navigation, route}: props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   scrollContainer: {
     marginBottom: 80,
   },
-})
+  textInputStyle: {
+    margin: 20,
+  },
+  errorApiResponseText: {
+    textAlign: 'center',
+    color: 'tomato',
+    margin: 7,
+  },
+  errorText: {
+    textAlign: 'center',
+    color: 'tomato',
+  },
+});
 
 export default UpdateNote;

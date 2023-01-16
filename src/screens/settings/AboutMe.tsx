@@ -3,6 +3,7 @@ import React, {useCallback} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
 import {SettingsNavigatorStackParams} from '../../types/navigationTypes';
 import {Button} from 'react-native-paper';
+import { Colors } from '../../config/colors/colors';
 
 type props = StackScreenProps<SettingsNavigatorStackParams, 'AboutMe'>;
 
@@ -58,7 +59,7 @@ const AboutMe = ({route}: props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   mainTextContainer: {
     margin: 18,
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   mainText: {
-    color: 'white',
+    color: Colors.text,
     textAlign: 'auto',
     fontSize: 24,
   },
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   contentText: {
-    color: 'white',
+    color: Colors.text,
     textAlign: 'center',
     fontSize: 18,
   },

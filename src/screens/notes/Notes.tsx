@@ -11,6 +11,7 @@ import {StackScreenProps} from '@react-navigation/stack';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 import type {MainStackParams} from '../../types/navigationTypes';
+import { Colors } from '../../config/colors/colors';
 
 type props = StackScreenProps<MainStackParams, 'Notes'>;
 
@@ -103,7 +104,7 @@ export const screenOptions = ({navigation}: props) => {
     headerRight: () => (
       <IconButton
         icon="plus"
-        iconColor="#8A2BE2"
+        iconColor={Colors.secondary}
         onPress={() => navigation.navigate('AddNote')}
       />
     ),
@@ -113,10 +114,10 @@ export const screenOptions = ({navigation}: props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   emptyList: {
-    color: '#8A2BE2',
+    color: Colors.secondary,
     margin: 40,
     textAlign: 'center',
   },

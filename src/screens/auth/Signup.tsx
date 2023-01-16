@@ -14,6 +14,7 @@ import {setUser} from '../../redux/auth/authSlice';
 import {signupValidationSchema} from '../../validations/auth/authValidations';
 import {Formik} from 'formik';
 import {storeKeychainData} from '../../storage/keychain';
+import { Colors } from '../../config/colors/colors';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -157,7 +158,7 @@ const Signup = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   mainContainer: {
     alignItems: 'center',
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 16,
-    color: '#8A2BE2',
+    color: Colors.secondary,
   },
   inputContainer: {
     width: '80%',

@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
-import React from 'react';
-import {Button} from 'react-native-paper';
+import React, {useEffect, useState} from 'react';
+import {Button, Switch} from 'react-native-paper';
 
 import type {StackScreenProps} from '@react-navigation/stack';
 import type {SettingsNavigatorStackParams} from '../../types/navigationTypes';
@@ -11,11 +11,14 @@ import {resetKeychainData} from '../../storage/keychain';
 import {useAppDispatch} from '../../redux/hooks';
 
 import {useAppSelector} from '../../redux/hooks';
+import {Colors} from '../../config/colors/colors';
 
 type props = StackScreenProps<SettingsNavigatorStackParams, 'Settings'>;
 
 const Settings = ({navigation}: props) => {
   const dispatch = useAppDispatch();
+
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const {username} = useAppSelector(state => state.auth);
 
@@ -25,24 +28,32 @@ const Settings = ({navigation}: props) => {
     dispatch(defaultNotes());
   };
 
+  useEffect(() => {
+    if (!isDarkMode) {
+      Colors.main = 'white';
+      Colors.text = 'black';
+    }
+    Colors.main = '#1f1f1f';
+    Colors.text = 'white';
+  }, [Colors.main, isDarkMode]);
+
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.userTextContainer}>
         <Text style={styles.userText}>{username}</Text>
       </View>
       <View style={styles.settingsElementContainer}>
+        <Switch
+          style={styles.settingsElement}
+          value={isDarkMode}
+          onValueChange={() => setIsDarkMode(!isDarkMode)}
+        />
         <Button
           style={styles.settingsElement}
           icon="information"
           mode="contained"
           onPress={() => navigation.navigate('AboutMe', {username: username!})}>
           About me
-        </Button>
-        <Button
-          style={styles.settingsElement}
-          icon="theme-light-dark"
-          mode="contained">
-          Theme
         </Button>
         <Button
           mode="contained"
@@ -75,7 +86,7 @@ const Settings = ({navigation}: props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   userTextContainer: {
     justifyContent: 'center',
@@ -83,7 +94,7 @@ const styles = StyleSheet.create({
     margin: 15,
   },
   userText: {
-    color: '#8A2BE2',
+    color: Colors.secondary,
     fontSize: 28,
     fontWeight: 'bold',
   },
@@ -92,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   settingsElement: {
-    color: '#8A2BE2',
+    color: Colors.secondary,
     margin: 15,
   },
 });

@@ -11,6 +11,7 @@ import {ActivityIndicator, Button} from 'react-native-paper';
 import type {MainStackParams} from '../../types/navigationTypes';
 import {useAppDispatch} from '../../redux/hooks';
 import {removeNote} from '../../redux/notes/notesSlice';
+import { Colors } from '../../config/colors/colors';
 
 type props = StackScreenProps<MainStackParams, 'Note'>;
 
@@ -110,7 +111,7 @@ export const screenOptions = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#1f1f1f',
+    backgroundColor: Colors.main,
   },
   deleteIcon: {
     justifyContent: 'flex-end',

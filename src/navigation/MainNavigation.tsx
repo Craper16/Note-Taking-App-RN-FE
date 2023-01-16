@@ -26,6 +26,7 @@ import AboutMe from '../screens/settings/AboutMe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Text} from 'react-native-paper';
 import Search from '../screens/search/Search';
+import { Colors } from '../config/colors/colors';
 
 const BottomRootStackNavigator =
   createBottomTabNavigator<BottomRootStackNavigatorParams>();
@@ -74,9 +75,9 @@ export const BottomRootStack = () => {
           }
           return <Text style={{color: color, fontSize: 11}}>{children}</Text>;
         },
-        tabBarActiveTintColor: '#8A2BE2',
-        tabBarActiveBackgroundColor: '#1f1f1f',
-        tabBarInactiveBackgroundColor: '#1f1f1f',
+        tabBarActiveTintColor: Colors.secondary,
+        tabBarActiveBackgroundColor: Colors.main,
+        tabBarInactiveBackgroundColor: Colors.main,
       })}>
       <BottomRootStackNavigator.Screen
         name="MainStack"
@@ -141,7 +142,7 @@ export const MainScreenStack = () => {
   return (
     <MainNavigatorStack.Navigator
       initialRouteName="Notes"
-      screenOptions={{headerTintColor: '#8A2BE2'}}>
+      screenOptions={{headerTintColor: Colors.secondary}}>
       <MainNavigatorStack.Screen
         options={notesScreenOptions}
         name="Notes"
@@ -164,7 +165,7 @@ export const AuthScreenStack = () => {
   return (
     <AuthNavigatorStack.Navigator
       initialRouteName="Login"
-      screenOptions={{headerTintColor: '#8A2BE2'}}>
+      screenOptions={{headerTintColor: Colors.secondary}}>
       <AuthNavigatorStack.Screen name="Login" component={Login} />
       <AuthNavigatorStack.Screen name="Signup" component={Signup} />
     </AuthNavigatorStack.Navigator>
