@@ -106,7 +106,7 @@ const SearchNavigatorStack = createStackNavigator<SearchNavigatorStackParams>();
 
 export const SearchScreenStack = () => {
   return (
-    <SearchNavigatorStack.Navigator>
+    <SearchNavigatorStack.Navigator initialRouteName="Search">
       <SearchNavigatorStack.Screen name="Search" component={Search} />
     </SearchNavigatorStack.Navigator>
   );
@@ -117,7 +117,7 @@ const CategoryNavigatorStack =
 
 export const CategoryScreenStack = () => {
   return (
-    <CategoryNavigatorStack.Navigator>
+    <CategoryNavigatorStack.Navigator initialRouteName="Categories">
       <CategoryNavigatorStack.Screen name="Categories" component={Categories} />
     </CategoryNavigatorStack.Navigator>
   );
