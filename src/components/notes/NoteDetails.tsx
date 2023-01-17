@@ -11,7 +11,7 @@ type props = {
   category: string;
   updatedAt: Date;
   createdAt: Date;
-  handleUpdate(): void;
+  handleUpdate?(): void;
 };
 
 const NoteDetails = ({
@@ -51,7 +51,7 @@ const NoteDetails = ({
         {showTags && (
           <View style={styles.tagsContainer}>
             {tags.map((tag, i) => (
-              <View>
+              <View key={i}>
                 <Text key={i} style={styles.textStyle}>
                   {tag}
                 </Text>
