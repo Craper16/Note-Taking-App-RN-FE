@@ -39,7 +39,7 @@ const AddNote = ({navigation}: props) => {
   useEffect(() => {
     if (categoriesSuccess) {
       categoriesData.categories.map((category: categoryData) =>
-        categoryTitles.push({label: category.title, value: category._id}),
+        categoryTitles.push({label: category.title, value: category.title}),
       );
       dispatch(setDropDownCategories({data: categoryTitles}));
     }
