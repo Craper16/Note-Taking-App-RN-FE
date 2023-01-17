@@ -14,7 +14,7 @@ import {setUser} from '../../redux/auth/authSlice';
 import {signupValidationSchema} from '../../validations/auth/authValidations';
 import {Formik} from 'formik';
 import {storeKeychainData} from '../../storage/keychain';
-import { Colors } from '../../config/colors/colors';
+import {Colors} from '../../config/colors/colors';
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -71,6 +71,7 @@ const Signup = () => {
                     testID="username"
                     autoCapitalize="none"
                     textColor="black"
+                    disabled={isLoading}
                     onChangeText={handleChange('username')}
                     onBlur={handleBlur('username')}
                     value={values.username}
@@ -92,6 +93,7 @@ const Signup = () => {
                     onChangeText={handleChange('password')}
                     onBlur={handleBlur('password')}
                     value={values.password}
+                    disabled={isLoading}
                     mode="flat"
                     theme={{colors: {primary: 'black'}}}
                     autoCorrect={false}
@@ -114,6 +116,7 @@ const Signup = () => {
                     testID="confirmPassword"
                     autoCapitalize="none"
                     textColor="black"
+                    disabled={isLoading}
                     onChangeText={handleChange('confirmPassword')}
                     onBlur={handleBlur('confirmPassword')}
                     value={values.confirmPassword}

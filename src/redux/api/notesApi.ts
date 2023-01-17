@@ -76,6 +76,14 @@ export const notesApi = createApi({
         };
       },
     }),
+    searchByTag: builder.query({
+      query: (tag: string) => {
+        return {
+          url: `/note/search/searchbytag?tag=${tag}`,
+          method: 'get',
+        };
+      },
+    }),
   }),
 });
 
@@ -85,4 +93,5 @@ export const {
   useFetchNoteQuery,
   useUpdateNoteMutation,
   useDeleteNoteMutation,
+  useSearchByTagQuery,
 } = notesApi;

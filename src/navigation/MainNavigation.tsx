@@ -26,7 +26,9 @@ import AboutMe from '../screens/settings/AboutMe';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Text} from 'react-native-paper';
 import Search from '../screens/search/Search';
-import { Colors } from '../config/colors/colors';
+import {Colors} from '../config/colors/colors';
+import FilteredNote from '../screens/search/FilteredNote';
+import UpdateFilteredNote from '../screens/search/UpdateFilteredNote'
 
 const BottomRootStackNavigator =
   createBottomTabNavigator<BottomRootStackNavigatorParams>();
@@ -109,6 +111,14 @@ export const SearchScreenStack = () => {
   return (
     <SearchNavigatorStack.Navigator initialRouteName="Search">
       <SearchNavigatorStack.Screen name="Search" component={Search} />
+      <SearchNavigatorStack.Screen
+        name="filteredNote"
+        component={FilteredNote}
+      />
+      <SearchNavigatorStack.Screen
+        name="UpdateFilteredNote"
+        component={UpdateFilteredNote}
+      />
     </SearchNavigatorStack.Navigator>
   );
 };

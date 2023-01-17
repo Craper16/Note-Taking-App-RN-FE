@@ -12,6 +12,13 @@ export type BottomRootStackNavigatorParams = {
 
 export type SearchNavigatorStackParams = {
   Search: undefined;
+  filteredNote: {noteId: string};
+  UpdateFilteredNote: {
+    noteId: string;
+    title: string;
+    content: string;
+    tags: string[];
+  };
 };
 
 export type CategoryNavigatorStackParams = {

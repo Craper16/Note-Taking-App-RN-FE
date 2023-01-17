@@ -17,7 +17,7 @@ import {Formik} from 'formik';
 import {storeKeychainData} from '../../storage/keychain';
 import type {StackScreenProps} from '@react-navigation/stack';
 import type {AuthStackParams} from '../../types/navigationTypes';
-import { Colors } from '../../config/colors/colors';
+import {Colors} from '../../config/colors/colors';
 
 type props = StackScreenProps<AuthStackParams, 'Login'>;
 
@@ -73,6 +73,7 @@ const Login = ({navigation}: props) => {
                 <View style={styles.textInputContainer}>
                   <TextInput
                     testID="username"
+                    disabled={isLoading}
                     autoCapitalize="none"
                     textColor="black"
                     onChangeText={handleChange('username')}
@@ -91,6 +92,7 @@ const Login = ({navigation}: props) => {
                 <View style={styles.textInputContainer}>
                   <TextInput
                     testID="password"
+                    disabled={isLoading}
                     autoCapitalize="none"
                     textColor="black"
                     onChangeText={handleChange('password')}
