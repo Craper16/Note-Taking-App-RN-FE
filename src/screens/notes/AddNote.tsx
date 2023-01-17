@@ -31,26 +31,26 @@ const AddNote = ({navigation}: props) => {
   const [createNote, {isError, isLoading, isSuccess, error, data}] =
     useCreateNoteMutation();
 
-  const categoriesData: any = useFetchCategoriesQuery().data;
+  const categoriesData = useFetchCategoriesQuery().data;
   const categoriesSuccess = useFetchCategoriesQuery().isSuccess;
 
   const categoryTitles: dropDownCategoriesModel[] = [];
 
   useEffect(() => {
     if (categoriesSuccess) {
-      categoriesData.categories.map((category: categoryData) =>
+      categoriesData!.categories.map((category: categoryData) =>
         categoryTitles.push({label: category.title, value: category.title}),
       );
       dispatch(setDropDownCategories({data: categoryTitles}));
     }
-  }, [categoriesSuccess, categoriesData]);
+  }, [categoriesSuccess, categoriesData, dispatch]);
 
   useEffect(() => {
     if (isSuccess) {
       dispatch(setNote({data: data?.note}));
       navigation.goBack();
     }
-  }, [isSuccess]);
+  }, [isSuccess, dispatch, navigation]);
 
   const initialValues: formValues = {
     categoryTitle: '',
@@ -182,6 +182,12 @@ const AddNote = ({navigation}: props) => {
       )}
     </Formik>
   );
+};
+
+export const screenOptions = () => {
+  return {
+    headerTitle: 'Add note',
+  };
 };
 
 const styles = StyleSheet.create({

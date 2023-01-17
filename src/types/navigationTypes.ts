@@ -23,6 +23,8 @@ export type SearchNavigatorStackParams = {
 
 export type CategoryNavigatorStackParams = {
   Categories: undefined;
+  CategoryDetails: {categoryId: string; categoryTitle: string};
+  AddCategory: undefined;
 };
 
 export type SettingsNavigatorStackParams = {

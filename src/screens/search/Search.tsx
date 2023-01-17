@@ -1,6 +1,5 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {FlashList} from '@shopify/flash-list';
 
 import {useSearchByTagQuery} from '../../redux/api/notesApi';
@@ -46,7 +45,8 @@ const Search = ({navigation}: props) => {
     );
 
   const renderNote = ({item}: {item: noteData}) => (
-    <TouchableWithoutFeedback
+    <TouchableOpacity
+      activeOpacity={0.8}
       onPress={() => {
         return (
           setSearchTag(''),
@@ -60,7 +60,7 @@ const Search = ({navigation}: props) => {
         createdAt={item.createdAt}
         updatedAt={item.updatedAt}
       />
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 
   return (

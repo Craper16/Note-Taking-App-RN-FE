@@ -17,10 +17,14 @@ import Notes, {
   screenOptions as notesScreenOptions,
 } from '../screens/notes/Notes';
 import Note, {screenOptions as noteScreenOptions} from '../screens/notes/Note';
-import AddNote from '../screens/notes/AddNote';
+import AddNote, {
+  screenOptions as addNoteScreenOptions,
+} from '../screens/notes/AddNote';
 import UpdateNote from '../screens/notes/UpdateNote';
 import Settings from '../screens/settings/Settings';
-import Categories from '../screens/categories/Categories';
+import Categories, {
+  screenOptions as categoriesScreenOptions,
+} from '../screens/categories/Categories';
 import AboutMe from '../screens/settings/AboutMe';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -28,7 +32,11 @@ import {Text} from 'react-native-paper';
 import Search from '../screens/search/Search';
 import {Colors} from '../config/colors/colors';
 import FilteredNote from '../screens/search/FilteredNote';
-import UpdateFilteredNote from '../screens/search/UpdateFilteredNote'
+import UpdateFilteredNote from '../screens/search/UpdateFilteredNote';
+import AddCategory from '../screens/categories/AddCategory';
+import CategoryDetails, {
+  screenOptions as categoryDetailsScreenOptions,
+} from '../screens/categories/CategoryDetails';
 
 const BottomRootStackNavigator =
   createBottomTabNavigator<BottomRootStackNavigatorParams>();
@@ -129,7 +137,20 @@ const CategoryNavigatorStack =
 export const CategoryScreenStack = () => {
   return (
     <CategoryNavigatorStack.Navigator initialRouteName="Categories">
-      <CategoryNavigatorStack.Screen name="Categories" component={Categories} />
+      <CategoryNavigatorStack.Screen
+        options={categoriesScreenOptions}
+        name="Categories"
+        component={Categories}
+      />
+      <CategoryNavigatorStack.Screen
+        name="AddCategory"
+        component={AddCategory}
+      />
+      <CategoryNavigatorStack.Screen
+        options={categoryDetailsScreenOptions}
+        name="CategoryDetails"
+        component={CategoryDetails}
+      />
     </CategoryNavigatorStack.Navigator>
   );
 };
@@ -163,7 +184,11 @@ export const MainScreenStack = () => {
         name="Note"
         component={Note}
       />
-      <MainNavigatorStack.Screen name="AddNote" component={AddNote} />
+      <MainNavigatorStack.Screen
+        options={addNoteScreenOptions}
+        name="AddNote"
+        component={AddNote}
+      />
       <MainNavigatorStack.Screen name="UpdateNote" component={UpdateNote} />
     </MainNavigatorStack.Navigator>
   );

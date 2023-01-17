@@ -1,6 +1,11 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {API_KEY} from '@env';
 import * as Keychain from 'react-native-keychain';
+import {categoryData} from '../../interfaces/categoryInterface';
+
+interface categoriesResponse {
+  categories: categoryData[];
+}
 
 export const categoriesApi = createApi({
   reducerPath: 'categoriesApi',
@@ -18,9 +23,8 @@ export const categoriesApi = createApi({
       }
     },
   }),
-  keepUnusedDataFor: 0,
   endpoints: builder => ({
-    fetchCategories: builder.query<void, void>({
+    fetchCategories: builder.query<categoriesResponse, void>({
       query: () => {
         return {
           url: '/category/categories',
@@ -28,7 +32,16 @@ export const categoriesApi = createApi({
         };
       },
     }),
+    addCategory: builder.mutation({
+      query: (body: {title: string}) => {
+        return {
+          url: '/category/create-category',
+          method: 'post',
+          body,
+        };
+      },
+    }),
   }),
 });
 
-export const {useFetchCategoriesQuery} = categoriesApi;
+export const {useFetchCategoriesQuery, useAddCategoryMutation} = categoriesApi;

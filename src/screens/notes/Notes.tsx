@@ -1,4 +1,10 @@
-import {View, Text, StyleSheet, RefreshControl} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState, useEffect, useCallback} from 'react';
 import {ActivityIndicator, IconButton} from 'react-native-paper';
 import {useFetchNotesQuery} from '../../redux/api/notesApi';
@@ -8,10 +14,9 @@ import {defaultNotes, setNotes} from '../../redux/notes/notesSlice';
 import Note from '../../components/notes/Note';
 import {noteData} from '../../interfaces/noteInterface';
 import {StackScreenProps} from '@react-navigation/stack';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 import type {MainStackParams} from '../../types/navigationTypes';
-import { Colors } from '../../config/colors/colors';
+import {Colors} from '../../config/colors/colors';
 
 type props = StackScreenProps<MainStackParams, 'Notes'>;
 
@@ -61,7 +66,8 @@ const Notes = ({navigation}: props) => {
     ) : null;
 
   const renderNote = ({item}: {item: noteData}) => (
-    <TouchableWithoutFeedback
+    <TouchableOpacity
+      activeOpacity={0.8}
       onPress={() => navigation.navigate('Note', {noteId: item._id})}>
       <Note
         key={item._id}
@@ -70,7 +76,7 @@ const Notes = ({navigation}: props) => {
         createdAt={item.createdAt}
         updatedAt={item.updatedAt}
       />
-    </TouchableWithoutFeedback>
+    </TouchableOpacity>
   );
 
   return (

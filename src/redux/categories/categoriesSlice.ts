@@ -21,15 +21,37 @@ const categoriesSlice = createSlice({
     setCategories: (state, action: PayloadAction<{data: categoryData[]}>) => {
       state.categories = [...action.payload.data];
     },
+    setCategory: (state, action: PayloadAction<{data: categoryData}>) => {
+      state.categories = [action.payload.data, ...state.categories];
+    },
     setDropDownCategories: (
       state,
       action: PayloadAction<{data: dropDownCategoriesModel[]}>,
     ) => {
-      state.dropDownCategories = [...action.payload.data];
+      state.dropDownCategories = [
+        ...state.dropDownCategories,
+        ...action.payload.data,
+      ];
+    },
+    addCategoryToDropDown: (
+      state,
+      action: PayloadAction<dropDownCategoriesModel>,
+    ) => {
+      state.dropDownCategories = [action.payload, ...state.dropDownCategories];
+    },
+    defaultCategories: state => {
+      state.categories = initialState.categories;
+      state.dropDownCategories = initialState.dropDownCategories;
     },
   },
 });
 
-export const {setCategories, setDropDownCategories} = categoriesSlice.actions;
+export const {
+  setCategories,
+  setDropDownCategories,
+  setCategory,
+  defaultCategories,
+  addCategoryToDropDown,
+} = categoriesSlice.actions;
 
 export default categoriesSlice.reducer;

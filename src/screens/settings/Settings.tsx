@@ -12,6 +12,7 @@ import {useAppDispatch} from '../../redux/hooks';
 
 import {useAppSelector} from '../../redux/hooks';
 import {Colors} from '../../config/colors/colors';
+import {defaultCategories} from '../../redux/categories/categoriesSlice';
 
 type props = StackScreenProps<SettingsNavigatorStackParams, 'Settings'>;
 
@@ -26,6 +27,7 @@ const Settings = ({navigation}: props) => {
     resetKeychainData();
     dispatch(defaultState());
     dispatch(defaultNotes());
+    dispatch(defaultCategories());
   };
 
   useEffect(() => {
