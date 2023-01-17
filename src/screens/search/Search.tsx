@@ -70,7 +70,7 @@ const Search = ({navigation}: props) => {
           style={styles.searchStyle}
           value={searchTag}
           autoCapitalize="none"
-          loading={isFetching}
+          loading={!isSuccess ? false : isFetching}
           iconColor={Colors.secondary}
           onChangeText={text => setSearchTag(text)}
         />

@@ -1,34 +1,49 @@
 import {View, Text, StyleSheet, KeyboardAvoidingView} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
+import {TextInput, Button, ActivityIndicator} from 'react-native-paper';
 import {useCreateNoteMutation} from '../../redux/api/notesApi';
 import {Formik} from 'formik';
 import {addNoteValidationSchema} from '../../validations/notes/noteValidation';
 import {StackScreenProps} from '@react-navigation/stack';
 import React, {useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {useAppDispatch} from '../../redux/hooks';
+import {useAppDispatch, useAppSelector} from '../../redux/hooks';
 import {setNote} from '../../redux/notes/notesSlice';
 import {formValues} from '../../interfaces/noteInterface';
 
 import type {MainStackParams} from '../../types/navigationTypes';
 import DropDown from 'react-native-paper-dropdown';
-import { Colors } from '../../config/colors/colors';
+import {Colors} from '../../config/colors/colors';
+import {useFetchCategoriesQuery} from '../../redux/api/categoriesApi';
+import {
+  categoryData,
+  dropDownCategoriesModel,
+} from '../../interfaces/categoryInterface';
+import {setDropDownCategories} from '../../redux/categories/categoriesSlice';
 
 type props = StackScreenProps<MainStackParams, 'AddNote'>;
 
-const categoryTitles = [
-  {label: 'whatever', value: 'whatever'},
-  {label: 'acategory', value: 'acategory'},
-  {label: 'indeed', value: 'indeed'},
-];
-
 const AddNote = ({navigation}: props) => {
   const dispatch = useAppDispatch();
+  const {dropDownCategories} = useAppSelector(state => state.categories);
 
   const [showDropDown, setShowDropDown] = useState(false);
 
   const [createNote, {isError, isLoading, isSuccess, error, data}] =
     useCreateNoteMutation();
+
+  const categoriesData: any = useFetchCategoriesQuery().data;
+  const categoriesSuccess = useFetchCategoriesQuery().isSuccess;
+
+  const categoryTitles: dropDownCategoriesModel[] = [];
+
+  useEffect(() => {
+    if (categoriesSuccess) {
+      categoriesData.categories.map((category: categoryData) =>
+        categoryTitles.push({label: category.title, value: category._id}),
+      );
+      dispatch(setDropDownCategories({data: categoryTitles}));
+    }
+  }, [categoriesSuccess, categoriesData]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -128,7 +143,7 @@ const AddNote = ({navigation}: props) => {
                   setValue={handleChange('categoryTitle')}
                   showDropDown={() => setShowDropDown(true)}
                   onDismiss={() => setShowDropDown(false)}
-                  list={categoryTitles}
+                  list={dropDownCategories}
                   activeColor={Colors.secondary}
                 />
                 {errors.categoryTitle && touched.categoryTitle && (
